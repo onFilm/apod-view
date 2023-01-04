@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+    scroll-behavior: smooth;
+    margin-top: 0px;
+    background-attachment: fixed;
+    background-color: #fee2f8;
+    background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+}
+
+@import 'semantic-ui-css/semantic.css';
