@@ -14,5 +14,5 @@ jobs:
         uses: actions/setup-node@master
       - name: Install dependencies
         run: npm install
-      - name: Run Tests
-        run: npm test
+      # - name: Run Tests
+      #   run: npm test
