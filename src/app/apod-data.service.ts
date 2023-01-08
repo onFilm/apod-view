@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
-  HttpErrorResponse,
 } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApodDataService {
-  apiUrl: string = 'http://apod-api:8888';
+  apiUrl: string = 'http://144.24.146.202:8888';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { }
