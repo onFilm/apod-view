@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PaginatePipe } from 'ngx-pagination';
 import { ApodDataService } from '../apod-data.service';
 
 @Component({
