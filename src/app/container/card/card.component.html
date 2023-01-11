@@ -2,19 +2,19 @@
 
     <div class="card" style="width:450px;">
         <div class="image">
-            <img alt="{{title}}" [src]="url" *ngIf="media_type === 'image'">
-            <iframe style="width: 100%; height: 100%;" [src]="sanitizeVideoURL(url)"
+            <img style="height: 250px;" alt="{{title}}" [src]="url" *ngIf="media_type === 'image'">
+            <iframe style="width: 100%; height: 250px;" [src]="sanitizeVideoURL(url)"
                 *ngIf="media_type === 'video'"></iframe>
         </div>
         <div class="content">
-            <div class="header">{{ title }}</div>
+            <div class="header"><a href="">{{ title }}</a></div>
             <div class="meta">
                 <a>{{ credit }}</a>
             </div>
             <div class="description">
                 {{ add3Dots(explanation, 250) }}
                 <br />
-                <a [href]="hdurl">Click here to view image</a>
+                <a [href]="hdurl">Click to view full image</a>
             </div>
         </div>
         <div class="extra content">

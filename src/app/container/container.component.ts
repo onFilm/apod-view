@@ -24,6 +24,6 @@ export class ContainerComponent {
 
   onTableDataChange(event: any) {
     this.page = event;
-    this.apodService.getChunksOfAPOD(event, this.limit);
   }
+
 }

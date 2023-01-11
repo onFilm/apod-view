@@ -1,25 +1,18 @@
-<div class="ui three column grid container" [ngClass]="'box-light'">
-  <app-card class="column" *ngFor="let record of apodData | paginate
+<div class="ui container">
+  <h1 id="title" class="light">Astronomy Picture Of The Day</h1>
+  <div class="ui three column grid container">
+    <app-card class="column" *ngFor="let record of apodData | paginate
       : {
           itemsPerPage: tableSize,
           currentPage: page,
           totalItems: count
         };
-    let i = index" 
-
-    [credit]="record.credit" 
-    [date]="record.date"
-    [title]="record.title" 
-    [hdurl]="record.hdurl" 
-    [explanation]="record.explanation" 
-    [media_type]="record.media_type"
-    [url]="record.url">
-  </app-card>
-</div>
-<div class="ui centered grid container">
-  <pagination-controls 
-    previousLabel="Prev" 
-    nextLabel="Next" 
-    (pageChange)="onTableDataChange($event)">
-  </pagination-controls>
+    let i = index" [credit]="record.credit" [date]="record.date" [title]="record.title" [hdurl]="record.hdurl"
+      [explanation]="record.explanation" [media_type]="record.media_type" [url]="record.url">
+    </app-card>
+  </div>
+  <div class="ui centered grid container">
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+  </div>
 </div>

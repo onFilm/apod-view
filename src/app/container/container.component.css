@@ -29,3 +29,14 @@
     border: 1px solid #dee2e6  !important;
     padding: 6px 12px !important;
 }
+
+h1 {
+    max-height: 100px;
+    font-size: 5em;
+    text-align: center;
+    font-family: 'normalFont', 'arial', sans-serif;
+}
+
+h1.light {
+    color: black;
+}
