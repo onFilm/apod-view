@@ -1,6 +1,6 @@
 <div class="ui container">
-  <h1 id="title" class="light">Astronomy Picture Of The Day</h1>
-  <div class="ui three column grid container">
+  <h1 id="title" class="light" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
+  <div [ngClass]=" isMobile ? 'ui grid one column mobile only row':'ui grid three column computer only row'">
     <app-card class="column" *ngFor="let record of apodData | paginate
       : {
           itemsPerPage: tableSize,

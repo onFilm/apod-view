@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ApodDataService } from '../apod-data.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class ContainerComponent {
   limit: number = 24;
   count: number = 0;
   tableSize: number = 6;
+  isMobile: boolean = false;
 
   constructor(private apodService: ApodDataService) {}
 
@@ -24,6 +25,16 @@ export class ContainerComponent {
 
   onTableDataChange(event: any) {
     this.page = event;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if(window.innerWidth < 800) {
+      this.isMobile = true;
+    } 
+    if(window.innerWidth > 800) {
+      this.isMobile = false;
+    } 
   }
 
 }
