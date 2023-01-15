@@ -11,6 +11,7 @@ import { CardComponent } from './container/card/card.component';
 import { SafePipe } from './safe.pipe';
 import { FullrecordComponent } from './container/fullrecord/fullrecord.component';
 import { HeaderComponent } from './header/header.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HeaderComponent } from './header/header.component';
     CardComponent,
     SafePipe,
     FullrecordComponent,
-    HeaderComponent
+    HeaderComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

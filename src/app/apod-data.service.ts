@@ -24,4 +24,8 @@ export class ApodDataService {
   getAPODByDate(_date: string) {
     return this.http.get(`${this.apiUrl}/apod?date=` + _date);
   }
+
+  refine(_searchTerm: string) {
+    return this.http.get(`${this.apiUrl}/apod?q=` + _searchTerm);
+  }
 }
