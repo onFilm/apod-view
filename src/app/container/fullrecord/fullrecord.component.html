@@ -1,0 +1,31 @@
+<app-header></app-header>
+<div class="ui container centered cards one column" *ngIf="record">
+    <div class="card" [ngClass]="_color">
+        <div class="image">
+            <img alt="{{this.record[0].title}}" [src]="this.record[0].hdurl"
+                *ngIf="this.record[0].media_type === 'image'" style="max-height: 720px;">
+            <iframe [src]="sanitizeVideoURL(this.record[0].url)" *ngIf="record[0].media_type === 'video'"
+                style="width: 100%; height: 720px;">
+            </iframe>
+        </div>
+        <div class="content">
+            <div class="header">{{ record[0].title }}</div>
+            <div class="meta">
+                <i>{{ record[0].credit }}</i>
+            </div>
+            <div class="description">
+                {{ record[0].explanation }}
+                <br />
+            </div>
+        </div>
+        <div class="extra content">
+            <span class="right floated">
+                {{ record[0].date }}
+            </span>
+            <div *ngIf="this.record[0].media_type === 'image'">
+                <i class="large link arrow alternate circle down outline icon" [ngClass]="_color"
+                    (click)="downloadMyFile(this.record[0].hdurl)"></i>
+            </div>
+        </div>
+    </div>
+</div>

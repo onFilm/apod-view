@@ -14,9 +14,10 @@ export class CardComponent {
   @Input() credit: string = '';
   @Input() media_type: string = '';
   @Input() explanation: string = '';
-  @Input() date: string= '';
+  @Input() date: string = '';
+  @Input() color: string = '';
 
-  constructor(private _sanitizer: DomSanitizer) {}
+  constructor(private _sanitizer: DomSanitizer) { }
 
   add3Dots(string: string, limit: number) {
     var dots = "...";

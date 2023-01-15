@@ -1,0 +1,17 @@
+h1 {
+    max-height: 100px;
+    font-size: 5em;
+    text-align: center;
+    font-family: 'normalFont', 'arial', sans-serif;
+}
+
+h1.light {
+    color: black;
+}
+
+h1.mobile {
+    max-height: 100px;
+    font-size: 2em;
+    text-align: center;
+    font-family: 'normalFont', 'arial', sans-serif;
+}

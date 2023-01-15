@@ -7,19 +7,19 @@ import { ApodDataService } from '../apod-data.service';
   styleUrls: ['./container.component.css']
 })
 export class ContainerComponent {
-  
+
+  loading: boolean = true;
   apodData: any;
   page: number = 1;
-  limit: number = 24;
-  count: number = 0;
-  tableSize: number = 6;
+  tableSize: number = 12;
   isMobile: boolean = false;
 
-  constructor(private apodService: ApodDataService) {}
+  constructor(private apodService: ApodDataService) { }
 
-   ngOnInit() {
-    this.apodService.getAllAPOD().subscribe(resp => {
+  ngOnInit() {
+    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => {
       this.apodData = resp;
+      this.loading = false;
     });
   }
 
@@ -29,12 +29,20 @@ export class ContainerComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if(window.innerWidth < 800) {
+    if (window.innerWidth < 800) {
       this.isMobile = true;
-    } 
-    if(window.innerWidth > 800) {
+    }
+    if (window.innerWidth > 800) {
       this.isMobile = false;
-    } 
+    }
+  }
+
+  onScroll() {
+    this.tableSize = this.tableSize + 6;
+    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => {
+      this.apodData = resp;
+      this.loading = false;
+    });
   }
 
 }

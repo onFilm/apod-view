@@ -1,4 +1,4 @@
-<div class="ui links cards">
+<div class="ui cards">
 
     <div class="card" style="width:450px;">
         <div class="image">
@@ -7,9 +7,9 @@
                 *ngIf="media_type === 'video'"></iframe>
         </div>
         <div class="content">
-            <div class="header"><a href="">{{ title }}</a></div>
+            <div class="header"><a routerLink="fr" [queryParams]="{date: date}" target="_blank">{{ title }}</a></div>
             <div class="meta">
-                <a>{{ credit }}</a>
+                <i>{{ credit }}</i>
             </div>
             <div class="description">
                 {{ add3Dots(explanation, 250) }}

@@ -18,6 +18,10 @@ export class ApodDataService {
   }
 
   getChunksOfAPOD(_page: number, _limit: number) {
-    return this.http.get(`${this.apiUrl}/apod?_page=` + _page + `&_limit=` + _limit);
+    return this.http.get(`${this.apiUrl}/apod?_sort=date&_order=desc&_page=` + _page + `&_limit=` + _limit);
+  }
+
+  getAPODByDate(_date: string) {
+    return this.http.get(`${this.apiUrl}/apod?date=` + _date);
   }
 }

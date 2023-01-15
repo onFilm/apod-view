@@ -1,18 +1,29 @@
+<app-header></app-header>
 <div class="ui container">
-  <h1 id="title" class="light" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
-  <div [ngClass]=" isMobile ? 'ui grid one column mobile only row':'ui grid three column computer only row'">
-    <app-card class="column" *ngFor="let record of apodData | paginate
-      : {
-          itemsPerPage: tableSize,
-          currentPage: page,
-          totalItems: count
-        };
-    let i = index" [credit]="record.credit" [date]="record.date" [title]="record.title" [hdurl]="record.hdurl"
-      [explanation]="record.explanation" [media_type]="record.media_type" [url]="record.url">
-    </app-card>
-  </div>
-  <div class="ui centered grid container">
-    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-    </pagination-controls>
+  <div [ngClass]=" isMobile ? 'ui grid one column mobile only row':'ui grid three column computer only row'"
+    infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+    <ng-template #loaded>
+      <app-card class="column" *ngFor="let record of apodData;
+      let i = index" [credit]="record.credit" [date]="record.date" [title]="record.title" [hdurl]="record.hdurl"
+        [explanation]="record.explanation" [media_type]="record.media_type" [url]="record.url">
+      </app-card>
+    </ng-template>
+    <div [ngClass]=" isMobile ? 'ui grid one column mobile only row':'ui grid three column computer only row'"
+      *ngIf="loading else loaded">
+      <div class="column" *ngFor="let _ of [].constructor(6)">
+        <div class="ui raised segment">
+          <div class="ui placeholder">
+            <div class="image">
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+            <div class="paragraph">
+              <div class="medium line"></div>
+              <div class="short line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
