@@ -30,7 +30,7 @@ import { SearchComponent } from './search/search.component';
     NgxPaginationModule,
     InfiniteScrollModule
   ],
-  providers: [],
+  providers: [ContainerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
