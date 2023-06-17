@@ -8,7 +8,7 @@ import {
   providedIn: 'root'
 })
 export class ApodDataService {
-  apiUrl: string = 'http://144.24.146.202:8888';
+  apiUrl: string = 'http://localhost:8888';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { }
