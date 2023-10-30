@@ -24,7 +24,7 @@
     "rxjs": "~7.8.0",
     "semantic-ui-css": "^2.5.0",
     "tslib": "^2.6.2",
-    "zone.js": "~0.14.0"
+    "zone.js": "~0.14.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.7",
