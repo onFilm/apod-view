@@ -17,7 +17,7 @@
     "@angular/core": "^15.0.0",
     "@angular/forms": "^17.0.4",
     "@angular/platform-browser": "^17.0.3",
-    "@angular/platform-browser-dynamic": "^17.0.3",
+    "@angular/platform-browser-dynamic": "^17.0.4",
     "@angular/router": "^17.0.3",
     "ngx-infinite-scroll": "^17.0.0",
     "ngx-pagination": "^6.0.3",
