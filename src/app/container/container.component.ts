@@ -1,10 +1,16 @@
 import { Component, HostListener } from '@angular/core';
+import { CardComponent } from './card/card.component';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from "../header/header.component";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ApodDataService } from '../apod-data.service';
 
 @Component({
-  selector: 'app-container',
-  templateUrl: './container.component.html',
-  styleUrls: ['./container.component.css']
+    selector: 'app-container',
+    standalone: true,
+    templateUrl: './container.component.html',
+    styleUrl: './container.component.css',
+    imports: [CommonModule, CardComponent, HeaderComponent, InfiniteScrollModule ]
 })
 export class ContainerComponent {
 
@@ -45,4 +51,10 @@ export class ContainerComponent {
     });
   }
 
+  handleInput(searchTerm: string) {
+    this.apodService.refine(searchTerm).subscribe(resp => {
+      this.apodData = resp;
+      this.loading = false;
+    });
+  }
 }

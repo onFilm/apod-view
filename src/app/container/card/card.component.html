@@ -7,7 +7,7 @@
                 *ngIf="media_type === 'video'"></iframe>
         </div>
         <div class="content">
-            <div class="header"><a routerLink="fr" [queryParams]="{date: date}" target="_blank">{{ title }}</a></div>
+            <div class="header"><a routerLink="fr" [queryParams]="{date: date}" target="_self">{{ title }}</a></div>
             <div class="meta">
                 <i>{{ credit }}</i>
             </div>
@@ -25,6 +25,12 @@
                 <i class=""></i>
                 {{ media_type | titlecase }}
             </span>
+            <button class="mini ui icon circular button red">
+                <i class="large heart outline icon"></i>
+            </button>
+            <button class="mini ui icon circular button">
+                <i class="large heart outline icon"></i>
+            </button>
         </div>
     </div>
 

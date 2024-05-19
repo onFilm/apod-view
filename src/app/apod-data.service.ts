@@ -26,6 +26,6 @@ export class ApodDataService {
   }
 
   refine(_searchTerm: string) {
-    return this.http.get(`${this.apiUrl}/apod?q=` + _searchTerm);
+    return this.http.get(`${this.apiUrl}/apod?q=` + _searchTerm + `&_limit=20`);
   }
 }

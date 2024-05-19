@@ -1,8 +1,9 @@
-.card:hover {
-    transform: scale(1.015) translateZ(0);
-    box-shadow: 0 0 20px 5px rgba(139, 25, 247, 0.2); 
+.card {
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease, box-shadow 0.3s ease; /* Add transition for smooth effect */
 }
 
-.card {
-    box-shadow: 0 0 50px rgba(11, 1, 20, 0.2) !important; 
+.card:hover {
+    transform: scale(1.015) translateZ(0);
+    box-shadow: 0px 0px 20px 5px rgba(128, 0, 255, 0.2); 
 }

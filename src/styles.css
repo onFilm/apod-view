@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import 'semantic-ui-css/semantic.css';
 @font-face {
     font-family: normalFont;
-    src: url(assets/font/font.woff) format("opentype");
+    src: url(assets/font.woff) format("opentype");
 }
 
 html,
@@ -20,5 +20,3 @@ body {
     padding: 0;
     font-family: 'normalFont', 'arial', sans-serif;
 }
-
-@import 'semantic-ui-css/semantic.css';

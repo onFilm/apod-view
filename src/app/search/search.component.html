@@ -1,4 +1,4 @@
-<div class="ui fluid icon input">
-    <input type="text" placeholder="Search..." #searchTerm (input)="onChange(searchTerm.value)">
+<div class="ui fluid huge icon input">
+    <input type="text" placeholder="Search..." (change)="captureText($event)" #searchTerm>
     <i class="inverted circular search link icon" (click)="searchQuery()"></i>
 </div>

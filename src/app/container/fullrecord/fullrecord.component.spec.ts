@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { FullrecordComponent } from './fullrecord.component';
 
 describe('FullrecordComponent', () => {
@@ -7,10 +8,10 @@ describe('FullrecordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FullrecordComponent]
+      imports: [FullrecordComponent]
     })
-      .compileComponents();
-
+    .compileComponents();
+    
     fixture = TestBed.createComponent(FullrecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

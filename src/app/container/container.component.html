@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (search)="handleInput($event)"></app-header>
 <div class="ui container">
   <div [ngClass]=" isMobile ? 'ui grid one column mobile only row':'ui grid three column computer only row'"
     infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">

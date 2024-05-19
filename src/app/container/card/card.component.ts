@@ -1,13 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-card',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrl: './card.component.css'
 })
 export class CardComponent {
-
   @Input() url: any;
   @Input() hdurl: any;
   @Input() title: string = '';
@@ -30,5 +33,4 @@ export class CardComponent {
   sanitizeVideoURL(url: string) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(url);
   }
-
 }

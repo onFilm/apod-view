@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { ApodDataService } from 'src/app/apod-data.service';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from "../../header/header.component";
+import { ApodDataService } from '../../apod-data.service';
 
 @Component({
-  selector: 'app-fullrecord',
-  templateUrl: './fullrecord.component.html',
-  styleUrls: ['./fullrecord.component.css']
+    selector: 'app-fullrecord',
+    standalone: true,
+    templateUrl: './fullrecord.component.html',
+    styleUrl: './fullrecord.component.css',
+    imports: [CommonModule, HeaderComponent]
 })
 export class FullrecordComponent {
-
+  imageLoaded: boolean = false;
   _date: string = '';
   record: any;
   _color: string = '';
-
 
   constructor(private route: ActivatedRoute, private apodService: ApodDataService, private _sanitizer: DomSanitizer) { }
 
@@ -28,6 +31,10 @@ export class FullrecordComponent {
     this.apodService.getAPODByDate(this._date).subscribe(resp => {
       this.record = resp;
     })
+  }
+
+  onImageLoad() {
+    this.imageLoaded = true;
   }
 
   sanitizeVideoURL(url: string) {
@@ -49,5 +56,4 @@ export class FullrecordComponent {
     link.click();
     link.remove();
   }
-
 }

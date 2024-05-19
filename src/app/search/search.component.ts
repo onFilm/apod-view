@@ -1,30 +1,24 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ApodDataService } from '../apod-data.service';
-import { ContainerComponent } from '../container/container.component';
 
 @Component({
   selector: 'app-search',
+  standalone: true,
+  imports: [],
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrl: './search.component.css'
 })
 export class SearchComponent {
+  searchTerm = "";
+  @Output() search = new EventEmitter<string>();
 
-  searchTerm: string = '';
-  @Output() searchTermEmitter = new EventEmitter<string>();
+  constructor() { }
 
-  constructor(private container: ContainerComponent, private apodService: ApodDataService) { }
-
-  onChange(value: string) {
-    this.searchTerm = value;
-    console.log(this.searchTerm);
+  captureText(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchTerm = input.value;
   }
 
   searchQuery() {
-    console.log("clicked");
-    this.apodService.refine(this.searchTerm).subscribe(resp => {
-      this.container.apodData = resp;
-      this.container.loading = false;
-    });
+    this.search.emit(this.searchTerm);
   }
-
 }

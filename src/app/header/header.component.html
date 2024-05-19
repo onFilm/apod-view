@@ -1,4 +1,4 @@
 <div class="ui container">
-    <h1 id="title" class="light" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
-    <app-search></app-search>
+    <h1 id="title" class="light gradient-text" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
+    <app-search (search)="handleSearch($event)"></app-search>
 </div>
