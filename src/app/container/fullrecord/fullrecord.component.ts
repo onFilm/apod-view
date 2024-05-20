@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../../header/header.component";
-import { ApodDataService } from '../../apod-data.service';
+import { ApodDataService } from '../../service/apod-data.service';
 
 @Component({
     selector: 'app-fullrecord',

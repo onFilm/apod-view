@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { apodActions } from '../../store/apod.action';
+import { isDateLiked } from '../../store/apod.selector';
 
 @Component({
   selector: 'app-card',
@@ -19,8 +22,13 @@ export class CardComponent {
   @Input() explanation: string = '';
   @Input() date: string = '';
   @Input() color: string = '';
+  isLiked: boolean = false;
 
-  constructor(private _sanitizer: DomSanitizer) { }
+  constructor(private _sanitizer: DomSanitizer, private store: Store) {
+    this.store.select(isDateLiked(this.date)).subscribe((result) => {
+      this.isLiked = result;
+    });
+   }
 
   add3Dots(string: string, limit: number) {
     var dots = "...";
@@ -32,5 +40,9 @@ export class CardComponent {
 
   sanitizeVideoURL(url: string) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  likeImage(date: string) {
+    this.store.dispatch(apodActions["[APOD]Like"]({ date }));
   }
 }

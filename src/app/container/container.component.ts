@@ -3,7 +3,7 @@ import { CardComponent } from './card/card.component';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header.component";
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ApodDataService } from '../apod-data.service';
+import { ApodDataService } from '../service/apod-data.service';
 
 @Component({
     selector: 'app-container',
