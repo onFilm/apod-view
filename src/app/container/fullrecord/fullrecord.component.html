@@ -12,7 +12,7 @@
             (load)="onImageLoad()"
             [alt]="record[0]?.title" 
             [src]="record[0]?.hdurl"
-            style="height: 100%; width: 100%; object-fit: cover; display: block;"
+            style="height: 100%; width: 100%; object-fit: fill; display: block;"
             [style.display]="imageLoaded ? 'block' : 'none'"
           >
         </ng-container>
