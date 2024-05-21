@@ -1,6 +1,9 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { SearchComponent } from "../search/search.component";
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { selectTotalLikedImages } from '../store/apod.reducer';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -10,6 +13,11 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, SearchComponent]
 })
 export class HeaderComponent {
+  totalLikedImages$: Observable<number>;
+
+  constructor(private store: Store) {
+    this.totalLikedImages$ = this.store.select(selectTotalLikedImages);
+  }
 
   isMobile: boolean = false;
   @Output() search = new EventEmitter<string>();

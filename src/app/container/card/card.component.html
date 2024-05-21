@@ -25,10 +25,10 @@
                 <i class=""></i>
                 {{ media_type | titlecase }}
             </span>
-            <button *ngIf="!isLiked" class="mini ui icon circular button" (click)="likeImage(date)">
+            <button *ngIf="!(isLiked$ | async)" class="mini ui icon circular button" (click)="likeImage(date)">
                 <i class="large heart outline icon"></i>
             </button>
-            <button *ngIf="isLiked" class="mini ui icon circular button red" (click)="likeImage(date)">
+            <button *ngIf="isLiked$ | async" class="mini ui icon circular button red" (click)="unLikeImage(date)">
                 <i class="large heart outline icon"></i>
             </button>
         </div>

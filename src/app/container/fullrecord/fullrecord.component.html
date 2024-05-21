@@ -40,8 +40,16 @@
           {{ record[0].date }}
         </span>
         <div *ngIf="record[0].media_type === 'image'">
-          <i class="large link arrow alternate circle down outline icon" [ngClass]="_color"
+          <button *ngIf="!(isLiked$ | async)" class="mini ui icon circular button" (click)="likeImage(record[0].date)">
+            <i class="large heart outline icon"></i>
+          </button>
+          <button *ngIf="isLiked$ | async" class="mini ui icon circular button red" (click)="unLikeImage(record[0].date)">
+            <i class="large heart outline icon"></i>
+          </button>
+          <button class="mini ui icon circular button">
+            <i class="large link arrow alternate circle down outline icon" [ngClass]="_color"
             (click)="downloadMyFile(record[0].hdurl)"></i>
+          </button>
         </div>
       </div>
     </div>

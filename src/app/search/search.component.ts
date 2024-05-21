@@ -14,10 +14,8 @@ import { Observable } from 'rxjs';
 export class SearchComponent {
   searchTerm = "";
   @Output() search = new EventEmitter<string>();
-  totalLikedImages$: Observable<number>;
   
-  constructor(private store: Store) {
-    this.totalLikedImages$ = this.store.select(selectTotalLikedImages);
+  constructor() {
   }
 
   captureText(event: Event) {

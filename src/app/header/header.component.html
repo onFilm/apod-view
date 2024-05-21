@@ -1,4 +1,7 @@
 <div class="ui container">
     <h1 id="title" class="light gradient-text" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
     <app-search (search)="handleSearch($event)"></app-search>
+    <button class="mini ui icon circular button red">
+        {{ totalLikedImages$ | async}}
+    </button>
 </div>

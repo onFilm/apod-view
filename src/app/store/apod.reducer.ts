@@ -24,7 +24,19 @@ const apodFeature = createFeature({
                     likedImages: [...state.likedImages, date] // Add new liked image date to the array
                 };
             }
-        })
+        }),
+        on(apodActions['[APOD]Unlike'], (state, { date }) => {
+            if(state.likedImages.includes(date)) {
+                return {
+                    ...state,
+                    totalLikedImages: state.totalLikedImages -1,
+                    likedImages: state.likedImages.filter(imageDate => imageDate !== date)
+                }
+                } else {
+                    return state;
+                }
+            }
+        )
     )
 })
 
@@ -32,5 +44,5 @@ export const {
     name: apodFeatureKey, 
     reducer: apodReducer, 
     selectTotalLikedImages,
-    selectLikedImages
+    selectLikedImages,
 } = apodFeature

@@ -1,12 +1,8 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ApodState } from "../types/apod.interface";
+import { createSelector } from "@ngrx/store";
+import { selectLikedImages } from "./apod.reducer";
 
-// Select the apod feature state
-const selectApodState = createFeatureSelector<ApodState>('apod');
-
-// Create a selector to check if a given date is present in the likedImages array
-export const isDateLiked = (date: string) =>
-  createSelector(
-    selectApodState,
-    (state) => state.likedImages.includes(date)
-  );
+// Selector to check if a specific date is present in the liked images array
+export const isDateLiked = (date: string) => createSelector(
+  selectLikedImages,
+  (likedImages: string[]) => likedImages.includes(date)
+);
