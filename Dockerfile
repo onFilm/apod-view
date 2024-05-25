@@ -1,7 +1,7 @@
-FROM node:17
+FROM node:22
 WORKDIR /src
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
+RUN npm install
 COPY . .
-EXPOSE 7777
+EXPOSE 4200
 CMD ["npm","start"]
