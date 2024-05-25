@@ -20,7 +20,7 @@ export class ApodDataService {
         this.apiUrl = process.env['API_URL'];
       } else {
         // If process.env.API_URL is not defined, fallback to default
-        console.log('Error while accessing process.env', process.env);
+        console.log('Error while accessing process.env');
         this.apiUrl = environment.apiUrl;
       }
     } catch (error) {
