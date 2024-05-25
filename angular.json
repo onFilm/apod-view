@@ -55,6 +55,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 4200,
+            "disableHostCheck": true
+          },
           "configurations": {
             "production": {
               "buildTarget": "apod-view:build:production"
