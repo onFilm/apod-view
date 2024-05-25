@@ -1,3 +1,17 @@
 :host .container {
     margin-top: 5px;
 }
+
+.previous-btn {
+    position: fixed;
+    margin-left: 20px;
+    top: 50%; /* Center vertically */
+}
+
+.next-btn {
+    position: fixed; /* Set the button's position to fixed */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust to center the button */
+    right: 0; /* Position the button on the right side */
+    margin-right: 20px;
+}

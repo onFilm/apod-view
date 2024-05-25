@@ -1,3 +1,9 @@
+<button class="previous-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('previous')">
+  <i class="big arrow left icon"></i>
+</button>
+<button class="next-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('next')">
+  <i class="big arrow right icon"></i>
+</button>
 <div class="ui container centered cards one column" *ngIf="record">
     <div class="card" [ngClass]="_color">
       <div class="image" style="height: 500px; overflow: hidden;">

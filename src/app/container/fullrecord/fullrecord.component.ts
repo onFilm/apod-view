@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../../header/header.component";
 import { ApodDataService } from '../../service/apod-data.service';
 import { Store } from '@ngrx/store';
 import { apodActions } from '../../store/apod.action';
-import { selectLikedImages } from '../../store/apod.reducer';
 import { isDateLiked } from '../../store/apod.selector';
 import { Observable } from 'rxjs';
 
@@ -15,7 +14,8 @@ import { Observable } from 'rxjs';
     standalone: true,
     templateUrl: './fullrecord.component.html',
     styleUrl: './fullrecord.component.css',
-    imports: [CommonModule, HeaderComponent]
+    imports: [CommonModule, HeaderComponent],
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class FullrecordComponent {
   imageLoaded: boolean = false;
@@ -28,6 +28,7 @@ export class FullrecordComponent {
     private route: ActivatedRoute, 
     private apodService: ApodDataService, 
     private _sanitizer: DomSanitizer,
+    private router: Router,
     private store: Store
   ) {}
 
@@ -52,10 +53,13 @@ export class FullrecordComponent {
   }
 
   returnRandomColor() {
-    const randomIndex = Math.floor(Math.random() * this._color.length);
-    const randomColor = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black'][randomIndex];
-    this._color = randomColor;
+    const colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black'];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    const randomColor = colors[randomIndex];
+    this._color = randomColor;  
+    return randomColor;
   }
+  
 
   downloadMyFile(url: string) {
     const link = document.createElement('a');
@@ -74,4 +78,22 @@ export class FullrecordComponent {
   unLikeImage(date: string) {
     this.store.dispatch(apodActions["[APOD]Unlike"]({ date }));
   }
+
+  clickPagination(type: string) {
+    var currentDate = new Date(this._date);
+    if(type === 'next') {
+      var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()+1}`;
+    } else {
+      var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()-1}`;
+    }
+    this.navigateWithQueryParam(formattedDate);
+  }
+
+  navigateWithQueryParam(paramValue: string) {
+    this.router.navigate(['/fr'], {
+      queryParams: { date: paramValue }
+    });
+  }
+  
+
 }

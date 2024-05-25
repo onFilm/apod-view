@@ -3,15 +3,29 @@ import {
   HttpClient,
   HttpHeaders,
 } from '@angular/common/http';
+import { environment } from '../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApodDataService {
-  apiUrl: string = 'http://localhost:8888';
+  apiUrl: string;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    try {
+      // Attempt to access process.env.API_URL
+      if (typeof process !== 'undefined' && process.env && process.env['API_URL']) {
+        this.apiUrl = process.env['API_URL'];
+      } else {
+        // If process.env.API_URL is not defined, fallback to default
+        this.apiUrl = environment.apiUrl;
+      }
+    } catch (error) {
+      console.error('Error accessing process.env.API_URL:', error);
+      this.apiUrl = environment.apiUrl;
+    }
+  }
 
   getAllAPOD() {
     return this.http.get(`${this.apiUrl}/apod?_sort=date&_order=desc`);
