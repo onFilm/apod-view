@@ -15,10 +15,12 @@ export class ApodDataService {
   constructor(private http: HttpClient) {
     try {
       // Attempt to access process.env.API_URL
+      console.log('Attempt to access process.env.API_URL');
       if (typeof process !== 'undefined' && process.env && process.env['API_URL']) {
         this.apiUrl = process.env['API_URL'];
       } else {
         // If process.env.API_URL is not defined, fallback to default
+        console.log('Error while accessing process.env');
         this.apiUrl = environment.apiUrl;
       }
     } catch (error) {
