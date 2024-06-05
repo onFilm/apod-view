@@ -12,6 +12,7 @@ export class ApodDataService {
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) {
+    console.log(window.location.protocol + '//' + window.location.hostname + ':8888');
     this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8888';
   }
 
