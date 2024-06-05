@@ -25,6 +25,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST_IP }} << EOF
             sudo docker stop apod-view || true
             sudo docker rm apod-view || true
+            sudo docker rmi apod-view || true
           EOF
 
       - name: SSH into EC2 Instance and Run Docker Containers
