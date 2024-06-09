@@ -4,10 +4,11 @@
 <button class="next-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('next')">
   <i class="big arrow right icon"></i>
 </button>
+<app-header [searchBox]="false"></app-header>
 <div class="ui container centered cards one column" *ngIf="record">
     <div class="card" [ngClass]="_color">
       <div class="image" style="height: 500px; overflow: hidden;">
-        <div *ngIf="!imageLoaded" style="height: 500px;">
+        <div *ngIf="!(imageLoaded$ | async)" style="height: 500px;">
           <div class="ui active dimmer">
             <div class="ui massive text loader">Loading...</div>
           </div>
@@ -19,7 +20,7 @@
             [alt]="record[0]?.title" 
             [src]="record[0]?.hdurl"
             style="height: 100%; width: 100%; object-fit: fill; display: block;"
-            [style.display]="imageLoaded ? 'block' : 'none'"
+            [style.display]="(imageLoaded$ | async) ? 'block' : 'none'"
           >
         </ng-container>
         

@@ -6,6 +6,8 @@ export const apodActions = createActionGroup({
     events: {
          '[APOD] likedImages': emptyProps(),
          '[APOD] like': props<{ date: string }>(),
-         '[APOD] unlike': props<{ date: string }>()
+         '[APOD] unlike': props<{ date: string }>(),
+
+         '[APOD] fullRecordImageLoading': props<{ loaded: boolean}>()
     }
 })

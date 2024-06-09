@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { apodActions } from '../../store/apod.action';
 import { isDateLiked } from '../../store/apod.selector';
 import { Observable } from 'rxjs';
+import { selectFullRecordImageLoading } from '../../store/apod.reducer';
 
 @Component({
     selector: 'app-fullrecord',
@@ -18,7 +19,7 @@ import { Observable } from 'rxjs';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class FullrecordComponent {
-  imageLoaded: boolean = false;
+  imageLoaded$: Observable<boolean>;
   _date: string = '';
   record: any;
   _color: string = '';
@@ -30,7 +31,9 @@ export class FullrecordComponent {
     private _sanitizer: DomSanitizer,
     private router: Router,
     private store: Store
-  ) {}
+  ) {
+    this.imageLoaded$ = this.store.select(selectFullRecordImageLoading);
+  }
 
   ngOnInit() {
     this.returnRandomColor();
@@ -45,7 +48,7 @@ export class FullrecordComponent {
   }
 
   onImageLoad() {
-    this.imageLoaded = true;
+    this.store.dispatch(apodActions["[APOD]FullRecordImageLoading"]({ loaded: true }));
   }
 
   sanitizeVideoURL(url: string) {
@@ -80,6 +83,7 @@ export class FullrecordComponent {
   }
 
   clickPagination(type: string) {
+    this.store.dispatch(apodActions["[APOD]FullRecordImageLoading"]({ loaded: false }));
     var currentDate = new Date(this._date);
     if(type === 'next') {
       var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()+1}`;
@@ -87,6 +91,9 @@ export class FullrecordComponent {
       var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()-1}`;
     }
     this.navigateWithQueryParam(formattedDate);
+    this.apodService.getAPODByDate(formattedDate).subscribe(resp => {
+      this.record = resp;
+    });
   }
 
   navigateWithQueryParam(paramValue: string) {

@@ -5,7 +5,8 @@ import { ApodState } from "../types/apod.interface";
 // Initial state
 const initialState: ApodState = {
     totalLikedImages: 0,
-    likedImages: [] // Initialize as an empty array of strings
+    likedImages: [], // Initialize as an empty array of strings
+    fullRecordImageLoading: false
 };
 
 const apodFeature = createFeature({
@@ -36,7 +37,13 @@ const apodFeature = createFeature({
                     return state;
                 }
             }
-        )
+        ),
+        on(apodActions['[APOD]FullRecordImageLoading'], (state, { loaded }) => {
+            return {
+                ...state,
+                fullRecordImageLoading: loaded
+            }
+        }),
     )
 })
 
@@ -45,4 +52,5 @@ export const {
     reducer: apodReducer, 
     selectTotalLikedImages,
     selectLikedImages,
+    selectFullRecordImageLoading
 } = apodFeature

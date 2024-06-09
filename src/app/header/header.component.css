@@ -17,3 +17,12 @@ h1.mobile {
     background-clip: text;
     color: transparent;
   }
+
+a {
+    text-decoration: none;
+}
+
+a.hidden-link {
+    color: transparent;
+    border: none;
+}

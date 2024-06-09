@@ -2,4 +2,5 @@
 export interface ApodState {
     totalLikedImages: number;
     likedImages: string[];
+    fullRecordImageLoading: boolean;
 }

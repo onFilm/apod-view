@@ -1,7 +1,11 @@
 <div class="ui container">
-    <h1 id="title" class="light gradient-text" [ngClass]="isMobile ? 'mobile': ''">Astronomy Picture Of The Day</h1>
-    <app-search (search)="handleSearch($event)"></app-search>
-    <button class="mini ui icon circular button red">
-        {{ totalLikedImages$ | async}}
-    </button>
+    <h1 id="title" class="light gradient-text" [ngClass]="isMobile ? 'mobile': ''">
+        <a href="#" class="hidden-link">Astronomy Picture Of The Day</a></h1>
+    <div style="display: flex; align-items: center;">
+        <app-search *ngIf="searchBox" (search)="handleSearch($event)" style="flex: auto"></app-search>
+        <button class="large ui icon circular button red">
+            <i class="heart icon"></i> &nbsp;
+            {{ totalLikedImages$ | async}}
+        </button>
+    </div>
 </div>
