@@ -1,9 +1,10 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { SearchComponent } from "../search/search.component";
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectTotalLikedImages } from '../store/apod.reducer';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { ResizeService } from '../service/resize.service';
 
 @Component({
     selector: 'app-header',
@@ -12,21 +13,30 @@ import { Observable } from 'rxjs';
     styleUrl: './header.component.css',
     imports: [CommonModule, SearchComponent]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Input() searchBox: boolean = true;
   totalLikedImages$: Observable<number>;
+  isMobile: boolean = false;
+  private resizeSubscription!: Subscription;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private resizeService: ResizeService) {
     this.totalLikedImages$ = this.store.select(selectTotalLikedImages);
   }
 
-  isMobile: boolean = window.innerWidth <= 800;
-  @Output() search = new EventEmitter<string>();
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.isMobile = window.innerWidth <= 800;
+  ngOnInit() {
+    this.isMobile = this.resizeService.isMobile;
+    this.resizeSubscription = this.resizeService.isMobile$.subscribe(isMobile => {
+      this.isMobile = isMobile;
+    });
   }
+
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
+
+  @Output() search = new EventEmitter<string>();
 
   handleSearch(event: any) {
     this.search.emit(event);
