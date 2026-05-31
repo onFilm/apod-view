@@ -1,12 +1,13 @@
-<div class="ui cards">
+<div class="ui cards" style="height: 100%;">
 
-    <div class="card" style="width:450px;">
+    <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
         <div class="image">
-            <img style="height: 250px;" alt="{{title}}" [src]="url" *ngIf="media_type === 'image'">
+            <img style="height: 250px; object-fit: cover; width: 100%;" alt="{{title}}" [src]="url" *ngIf="media_type === 'image'">
             <iframe style="width: 100%; height: 250px;" [src]="sanitizeVideoURL(url)"
                 *ngIf="media_type === 'video'"></iframe>
+            <img style="height: 250px; object-fit: cover; width: 100%;" alt="Placeholder" src="https://placehold.co/450x250/eeeeee/999999?text=No+Media" *ngIf="media_type !== 'image' && media_type !== 'video'">
         </div>
-        <div class="content">
+        <div class="content" style="flex-grow: 1;">
             <div class="header"><a routerLink="fr" [queryParams]="{date: date}" target="_self">{{ title }}</a></div>
             <div class="meta">
                 <i>{{ credit }}</i>
