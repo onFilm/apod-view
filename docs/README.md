@@ -6,7 +6,7 @@ Welcome to the **APOD View** documentation! This project is the frontend client 
 
 ## 📌 Overview
 
-**APOD View** is a modern Single Page Application (SPA) built with Angular. It allows users to infinitely scroll through historical Astronomy Pictures of the Day, search for specific terms or dates, and view full records. The app connects seamlessly to the local `json-server` provided by the APOD Daily Data Extractor (expected to be running on port `8888`).
+**APOD View** is a modern Single Page Application (SPA) built with Angular. It allows users to infinitely scroll through historical Astronomy Pictures of the Day, search for specific terms or dates, and view full records. The app connects seamlessly to the backend APOD API (expected to be running on port `8080`).
 
 ---
 
@@ -39,7 +39,7 @@ A brief overview of the critical paths in the repository:
   - `src/app/container/` - Contains the main view and the `fullrecord` components.
   - `src/app/search/` - Components responsible for the search and refine functionality.
   - `src/app/store/` - NgRx state management (actions, reducers, and selectors for APOD data).
-  - `src/app/service/apod-data.service.ts` - The HTTP service that interfaces with the backend APOD `json-server`.
+  - `src/app/service/apod-data.service.ts` - The HTTP service that interfaces with the backend APOD API.
   - `src/app/app.routes.ts` - Application routing definition.
 - `Dockerfile` - For running the dev server inside a Docker container.
 
@@ -47,11 +47,13 @@ A brief overview of the critical paths in the repository:
 
 ## 🔗 API Integration
 
-The application expects the backend API (the APOD Daily Data Extractor) to be available on the same hostname at port `8888`. It leverages standard `json-server` queries:
-- **Pagination**: `?_page=X&_limit=Y`
-- **Sorting**: `?_sort=date&_order=desc`
-- **Searching**: `?q=searchTerm`
-- **Specific Date**: `?date=YYYY-MM-DD`
+The application expects the backend API to be available at `http://localhost:8080` (or configured via proxy). It interacts with the following endpoints under `/api/v1/`:
+- **Authentication**: `/authenticate` (retrieves session cookies)
+- **Data Retrieval**: `/apods`
+  - **Pagination**: `?_offset=X&_size=Y`
+  - **Sorting**: `?_sort=date&_order=desc`
+  - **Searching**: `?q=searchTerm`
+- **Specific Date**: `/apod?date=YYYY-MM-DD`
 
 ---
 
@@ -74,7 +76,7 @@ Make sure you have [Node.js](https://nodejs.org/) installed along with the [Angu
    # or
    ng serve
    ```
-   *Note: Ensure your APOD backend API is running on port 8888 so data loads successfully.*
+   *Note: Ensure your APOD backend API is running on port 8080 so data loads successfully.*
 
 3. **Build for Production:**
    Run the build command to generate production-ready artifacts in the `dist/` directory.

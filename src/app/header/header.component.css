@@ -1,15 +1,17 @@
-h1 {
+#title {
     max-height: 100px;
-    font-size: 5em;
+    font-size: 2.5em;
     text-align: center;
     font-family: 'normalFont', 'arial', sans-serif;
+    padding-top: 0.5em;
 }
 
-h1.mobile {
+#title.mobile {
     max-height: 100px;
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     font-family: 'normalFont', 'arial', sans-serif;
+    padding-top: 0.5em;
 }
 
 .gradient-text {

@@ -2,11 +2,13 @@ import { ApplicationConfig, isDevMode, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { apodReducer } from './store/apod.reducer';
 import { ApodDataService } from './service/apod-data.service';
+
+import { authInterceptor } from './service/auth.interceptor';
 
 export function initializeApp(apodService: ApodDataService) {
   return () => apodService.authenticate();
@@ -16,7 +18,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(), 
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,

@@ -1,67 +1,77 @@
 <button class="previous-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('previous')">
   <i class="big arrow left icon"></i>
 </button>
-<button class="next-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('next')">
+<button class="next-btn ui circular icon button" [ngClass]="_color" (click)="clickPagination('next')" [disabled]="isNextDisabled">
   <i class="big arrow right icon"></i>
 </button>
 <app-header [searchBox]="false"></app-header>
-<div class="ui container centered cards one column" *ngIf="record">
-    <div class="card" [ngClass]="_color">
-      <div class="image" style="height: 500px; overflow: hidden;">
-        <div *ngIf="!(imageLoaded$ | async)" style="height: 500px;">
-          <div class="ui active dimmer">
-            <div class="ui massive text loader">Loading...</div>
+<div class="ui container" *ngIf="record" style="padding-bottom: 2rem;">
+    <div style="width: 100%; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <button class="ui labeled icon button" (click)="goBack()">
+        <i class="left chevron icon"></i>
+        Back to Home
+      </button>
+      <div *ngIf="record.media_type === 'image'">
+        <button *ngIf="!(isLiked$ | async)" class="mini ui icon circular button" (click)="likeImage(record.date)">
+          <i class="large heart outline icon"></i>
+        </button>
+        <button *ngIf="isLiked$ | async" class="mini ui icon circular button red" (click)="unLikeImage(record.date)">
+          <i class="large heart outline icon"></i>
+        </button>
+        <button class="mini ui icon circular button">
+          <i class="large share square outline icon"></i>
+        </button>
+        <button class="mini ui icon circular button">
+          <i class="large link arrow alternate circle down outline icon" [ngClass]="_color"
+          (click)="downloadMyFile(record.hdurl || '')"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="ui fluid card" [ngClass]="_color" style="display: flex; flex-direction: row; flex-wrap: wrap; margin: 0; overflow: hidden;">
+      <!-- Left side: Image/Video -->
+      <div style="flex: 3 1 500px; background-color: #000; display: flex; align-items: center; justify-content: center; position: relative;">
+        <div *ngIf="!(imageLoaded$ | async) && record.media_type === 'image'" style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+          <div class="ui active inverted dimmer">
+            <div class="ui text loader">Loading...</div>
           </div>
         </div>
         
-        <ng-container *ngIf="record?.media_type === 'image'; else videoTemplate">
+        <ng-container *ngIf="record.media_type === 'image'; else videoTemplate">
           <img 
             (load)="onImageLoad()"
-            [alt]="record?.title" 
-            [src]="record?.hdurl"
-            style="height: 100%; width: 100%; object-fit: fill; display: block;"
+            [alt]="record.title" 
+            [src]="record.hdurl || record.url"
+            style="width: 100%; height: 100%; object-fit: contain; max-height: 80vh;"
             [style.display]="(imageLoaded$ | async) ? 'block' : 'none'"
           >
         </ng-container>
         
         <ng-template #videoTemplate>
           <iframe 
-            [src]="sanitizeVideoURL(record?.url)" 
-            style="width: 100%; height: 100%;"
+            [src]="sanitizeVideoURL(record!.url)" 
+            style="width: 100%; height: 100%; min-height: 600px; border: none;"
           ></iframe>
         </ng-template>
       </div>
         
-      <div class="content">
-        <div class="header">{{ record.title }}</div>
-        <div class="meta">
-          <i>{{ record.credit }}</i>
+      <!-- Right side: Metadata -->
+      <div style="flex: 2 1 300px; display: flex; flex-direction: column; background: #fff; max-height: 80vh;">
+        <div class="content" style="flex: 1; overflow-y: auto; padding: 2em;">
+          <div class="header" style="font-size: 2em; line-height: 1.2; margin-bottom: 0.5em; font-weight: bold; color: #333;">{{ record.title }}</div>
+          <div class="meta" style="margin-bottom: 1.5em; font-size: 1.1em; color: #888;">
+            <i *ngIf="record.credit">Credit: {{ record.credit }}</i>
+          </div>
+          <div class="description" style="font-size: 1.1em; line-height: 1.8; text-align: justify; color: #444;">
+            {{ record.explanation }}
+          </div>
         </div>
-        <div class="description">
-          {{ record.explanation }}
-          <br />
-        </div>
-      </div>
-      <div class="extra content">
-        <span class="right floated">
-          {{ record.date }}
-        </span>
-        <div *ngIf="record.media_type === 'image'">
-          <button *ngIf="!(isLiked$ | async)" class="mini ui icon circular button" (click)="likeImage(record.date)">
-            <i class="large heart outline icon"></i>
-          </button>
-          <button *ngIf="isLiked$ | async" class="mini ui icon circular button red" (click)="unLikeImage(record.date)">
-            <i class="large heart outline icon"></i>
-          </button>
-          <button class="mini ui icon circular button">
-            <i class="large share square outline icon"></i>
-          </button>
-          <button class="mini ui icon circular button">
-            <i class="large link arrow alternate circle down outline icon" [ngClass]="_color"
-            (click)="downloadMyFile(record.hdurl)"></i>
-          </button>
+        <div class="extra content" style="padding: 1.5em 2em; border-top: 1px solid rgba(0,0,0,.05); background: #f9fafb;">
+          <span style="font-weight: bold; font-size: 1.1em; color: #555;">
+            <i class="calendar outline icon"></i> {{ record.date }}
+          </span>
         </div>
       </div>
     </div>
-  </div>
+</div>
   

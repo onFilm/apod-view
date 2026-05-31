@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header.component";
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ApodDataService } from '../service/apod-data.service';
+import { ApodData } from '../types/apod.interface';
 
 @Component({
     selector: 'app-container',
@@ -15,18 +16,19 @@ import { ApodDataService } from '../service/apod-data.service';
 export class ContainerComponent {
 
   loading: boolean = true;
-  apodData: any;
+  apodData: ApodData[] = [];
   page: number = 1;
   tableSize: number = 12;
-  isMobile: boolean = false;
+  isMobile: boolean = window.innerWidth <= 800;
 
   constructor(private apodService: ApodDataService) { }
 
+  get gridClass(): string {
+    return this.isMobile ? 'ui grid one column mobile only row' : 'ui grid three column computer only row';
+  }
+
   ngOnInit() {
-    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => {
-      this.apodData = resp;
-      this.loading = false;
-    });
+    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => this.handleDataResponse(resp));
   }
 
   onTableDataChange(event: any) {
@@ -35,26 +37,20 @@ export class ContainerComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if (window.innerWidth < 800) {
-      this.isMobile = true;
-    }
-    if (window.innerWidth > 800) {
-      this.isMobile = false;
-    }
+    this.isMobile = window.innerWidth <= 800;
   }
 
   onScroll() {
     this.tableSize = this.tableSize + 6;
-    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => {
-      this.apodData = resp;
-      this.loading = false;
-    });
+    this.apodService.getChunksOfAPOD(this.page, this.tableSize).subscribe(resp => this.handleDataResponse(resp));
   }
 
   handleInput(searchTerm: string) {
-    this.apodService.refine(searchTerm).subscribe(resp => {
-      this.apodData = resp;
-      this.loading = false;
-    });
+    this.apodService.refine(searchTerm).subscribe(resp => this.handleDataResponse(resp));
+  }
+
+  private handleDataResponse(resp: ApodData[]) {
+    this.apodData = resp;
+    this.loading = false;
   }
 }

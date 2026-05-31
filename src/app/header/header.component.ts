@@ -20,17 +20,12 @@ export class HeaderComponent {
     this.totalLikedImages$ = this.store.select(selectTotalLikedImages);
   }
 
-  isMobile: boolean = false;
+  isMobile: boolean = window.innerWidth <= 800;
   @Output() search = new EventEmitter<string>();
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    if (window.innerWidth < 800) {
-      this.isMobile = true;
-    }
-    if (window.innerWidth > 800) {
-      this.isMobile = false;
-    }
+    this.isMobile = window.innerWidth <= 800;
   }
 
   handleSearch(event: any) {

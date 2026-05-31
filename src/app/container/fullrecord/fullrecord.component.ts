@@ -9,6 +9,7 @@ import { apodActions } from '../../store/apod.action';
 import { isDateLiked } from '../../store/apod.selector';
 import { Observable } from 'rxjs';
 import { selectFullRecordImageLoading } from '../../store/apod.reducer';
+import { ApodData } from '../../types/apod.interface';
 
 @Component({
     selector: 'app-fullrecord',
@@ -21,9 +22,19 @@ import { selectFullRecordImageLoading } from '../../store/apod.reducer';
 export class FullrecordComponent {
   imageLoaded$: Observable<boolean>;
   _date: string = '';
-  record: any;
-  _color: string = '';
+  record: ApodData | undefined;
+  _color: string = 'black';
   isLiked$!: Observable<boolean>;
+
+  get isNextDisabled(): boolean {
+    if (!this._date) return true;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    const todayStr = `${year}-${month}-${day}`;
+    return this._date >= todayStr;
+  }
 
   constructor(
     private route: ActivatedRoute, 
@@ -36,7 +47,6 @@ export class FullrecordComponent {
   }
 
   ngOnInit() {
-    this.returnRandomColor();
     this.route.queryParams
       .subscribe(params => {
         this._date = params['date'];
@@ -55,13 +65,6 @@ export class FullrecordComponent {
     return this._sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  returnRandomColor() {
-    const colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black'];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    const randomColor = colors[randomIndex];
-    this._color = randomColor;  
-    return randomColor;
-  }
   
 
   downloadMyFile(url: string) {
@@ -84,12 +87,19 @@ export class FullrecordComponent {
 
   clickPagination(type: string) {
     this.store.dispatch(apodActions["[APOD]FullRecordImageLoading"]({ loaded: false }));
-    var currentDate = new Date(this._date);
+    var targetDate = new Date(this._date);
+    
     if(type === 'next') {
-      var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()+1}`;
+      targetDate.setDate(targetDate.getDate() + 1);
     } else {
-      var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate()-1}`;
+      targetDate.setDate(targetDate.getDate() - 1);
     }
+    
+    var year = targetDate.getFullYear();
+    var month = (targetDate.getMonth() + 1).toString().padStart(2, '0');
+    var day = targetDate.getDate().toString().padStart(2, '0');
+    var formattedDate = `${year}-${month}-${day}`;
+    
     this.navigateWithQueryParam(formattedDate);
     this.apodService.getAPODByDate(formattedDate).subscribe(resp => {
       this.record = resp;
@@ -100,6 +110,10 @@ export class FullrecordComponent {
     this.router.navigate(['/fr'], {
       queryParams: { date: paramValue }
     });
+  }
+  
+  goBack() {
+    this.router.navigate(['/']);
   }
   
 
