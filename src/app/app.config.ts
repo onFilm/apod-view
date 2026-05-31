@@ -1,4 +1,4 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { ApplicationConfig, isDevMode, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -6,12 +6,23 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { apodReducer } from './store/apod.reducer';
+import { ApodDataService } from './service/apod-data.service';
+
+export function initializeApp(apodService: ApodDataService) {
+  return () => apodService.authenticate();
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideStore(), 
     provideHttpClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ApodDataService],
+      multi: true
+    },
     provideState("apod", apodReducer),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
